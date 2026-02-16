@@ -5,7 +5,6 @@ This package provides validation functionality for preCICE adapter configuration
 """
 
 import json
-import os
 from pathlib import Path
 
 import jsonschema

@@ -1,0 +1,211 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/precice/preeco-orga/releases/download/v0.4/precice_adapter_config_schema.json",
+  "type": "object",
+  "metaConfigurator": {
+    "aiExportFormats": {
+      "OpenFOAM": {
+        "url": "https://github.com/precice/tutorials/blob/develop/perpendicular-flap/fluid-openfoam/system/preciceDict",
+        "description": "Export as an OpenFOAM preCICE Adapter Configuration."
+      },
+      "ISSM": {
+        "url": "https://github.com/precice/preeco-orga/blob/main/adapter-config-schema/export-formats/issm-example.yaml",
+        "description": "Export as an ISSM preCICE Adapter Configuration in YAML."
+      }
+    }
+  },
+  "title": "preCICE Adapter Configuration Schema",
+  "description": "A JSON schema for configurations of adapters and tools within the preCICE ecosystem. Use the schema for validation and LLM-based auto-conversion to other configuration languages (e.g., OpenFOAM dictionary or YAML). The schema is developed as part of the preECO standardization, see https://precice.discourse.group/t/shape-the-future-of-the-precice-ecosystem-the-preeco-project/2019.",
+  "properties": {
+    "participant_name": {
+      "type": "string",
+      "description": "Name of the participant.",
+      "default": "Fluid",
+      "examples": [
+        "Fluid",
+        "Solid",
+        "Fluid-Left"
+      ],
+      "minLength": 1,
+      "pattern": "^[A-Z][a-zA-Z0-9-]*$"
+    },
+    "precice_config_file_path": {
+      "type": "string",
+      "description": "Path to the preCICE configuration file relative to the current working directory of the coupled solver.",
+      "default": "../precice-config.xml",
+      "minLength": 1,
+      "pattern": "^/?(?:\\.\\./)*([a-zA-Z0-9]+(-[a-zA-Z0-9]+)*/)*[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*\\.xml$"
+    },
+    "interfaces": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "mesh_name": {
+            "type": "string",
+            "description": "Name of the mesh associated with this interface.",
+            "default": "Fluid-Mesh",
+            "examples": [
+              "Fluid-Mesh",
+              "Solid-Mesh",
+              "Fluid-Upstream-Mesh",
+              "Fluid-Upstream-Mesh-Centers",
+              "Fluid-Upstream-Mesh-Nodes"
+            ],
+            "minLength": 6,
+            "pattern": "^[A-Z][a-zA-Z0-9]*(?:-[A-Z][a-zA-Z0-9]*)*-Mesh(?:-[A-Z][a-zA-Z0-9]*)*$"
+          },
+          "patches": {
+            "type": "array",
+            "description": "List of mesh or geometry patches (boundary or volume) to locate the interface.",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 1
+          },
+          "location": {
+            "type": "string",
+            "description": "Further specification of mesh locations",
+            "minLength": 1,
+            "examples": [
+              "faceCenters",
+              "volumeCenters",
+              "faceNodes",
+              "nodes"
+            ]
+          },
+          "write_data": {
+            "type": "array",
+            "description": "List of data fields to be written to this mesh.",
+            "items": {
+              "$ref": "#/$defs/precice_data"
+            }
+          },
+          "read_data": {
+            "type": "array",
+            "description": "List of data fields to be read from this mesh.",
+            "items": {
+              "$ref": "#/$defs/precice_data"
+            }
+          },
+          "is_received": {
+            "type": "boolean",
+            "description": "Whether mesh is received from another participant for (direct) API access or not (i.e. provided)."
+          }
+        },
+        "required": [
+          "mesh_name"
+        ],
+        "if": {
+          "properties": {
+            "is_received": {
+              "const": true
+            }
+          }
+        },
+        "then": {
+          "not": {
+            "required": [
+              "location"
+            ]
+          }
+        }
+      },
+      "minItems": 1
+    }
+  },
+  "required": [
+    "participant_name",
+    "precice_config_file_path",
+    "interfaces"
+  ],
+  "additionalProperties": {
+    "title": "Solver settings",
+    "description": "Optional solver specific settings. We recommend calling the main object after the solver, e.g. 'mbdyn'",
+    "type": "object",
+    "examples": [
+      "mbdyn",
+      "issm",
+      "code_aster",
+      "tau"
+    ],
+    "additionalProperties": {
+      "title": "Solver parameter",
+      "oneOf": [
+        {
+          "title": "String property",
+          "description": "An optional string setting, such as the location of the solver configuration file.",
+          "type": "string",
+          "examples": [
+            "root_path",
+            "model_name",
+            "input_file_path",
+            "output_file_path"
+          ]
+        },
+        {
+          "title": "Number property",
+          "description": "An optional number setting, such as the write interval of the solver.",
+          "type": "number",
+          "examples": [
+            "write-interval",
+            "delay"
+          ]
+        }
+      ]
+    }
+  },
+  "$defs": {
+    "precice_data": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the data as specified in the preCICE configuration.",
+          "default": "Force",
+          "examples": [
+            "Force",
+            "Displacement",
+            "Velocity",
+            "Temperature",
+            "Heat-Flux",
+            "Force1",
+            "Force-Left",
+            "Heat-Transfer-Coefficient",
+            "Sink-Temperature"
+          ],
+          "minLength": 1,
+          "pattern": "^[A-Z][a-zA-Z0-9]*(?:-[A-Za-z0-9]+)*$"
+        },
+        "solver_name": {
+          "type": "string",
+          "description": "Name of the data as used by the solver (optional).",
+          "examples": [
+            "temp",
+            "T"
+          ],
+          "minLength": 1
+        },
+        "operation": {
+          "type": "string",
+          "description": "Operation applied by the adapter on the data (optional).",
+          "examples": [
+            "value",
+            "gradient"
+          ],
+          "minLength": 1
+        },
+        "flip-normal": {
+          "type": "boolean",
+          "title": "Use a non-standard assumption for the direction of fluxes.",
+          "description": "Flip the direction of the normal vector for flux-type fields. Default assumption: written fields face outwards, read fields face inwards.",
+          "default": false
+        }
+      },
+      "required": [
+        "name"
+      ]
+    }
+  }
+}

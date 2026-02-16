@@ -27,15 +27,15 @@ classifiers = [
 ]
 dependencies = [
     "jsonschema>=4.0.0",
+    "importlib-resources>=5.0.0; python_version < '3.9'",
 ]
 
 [project.urls]
 Homepage = "https://github.com/precice/adapter-schema"
 Repository = "https://github.com/precice/adapter-schema"
 
-[tool.setuptools.packages.find]
-where = ["."]
-include = ["preciceadapterschema*"]
+[tool.setuptools]
+packages = ["preciceadapterschema"]
 
 [tool.setuptools.package-data]
 preciceadapterschema = ["*.json"]

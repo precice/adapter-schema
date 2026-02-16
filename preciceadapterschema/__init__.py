@@ -5,7 +5,12 @@ This package provides validation functionality for preCICE adapter configuration
 """
 
 import json
-from pathlib import Path
+
+try:
+    from importlib.resources import files
+except ImportError:
+    # Fallback for Python < 3.9
+    from importlib_resources import files
 
 import jsonschema
 
@@ -29,9 +34,8 @@ def validate(instance):
     
     # Load the schema only once and cache it
     if _schema_cache is None:
-        schema_path = Path(__file__).parent / "precice_adapter_config.schema.json"
-        with open(schema_path, 'r') as schema_file:
-            _schema_cache = json.load(schema_file)
+        schema_text = files("preciceadapterschema").joinpath("precice_adapter_config.schema.json").read_text()
+        _schema_cache = json.loads(schema_text)
     
     # Validate the instance against the cached schema
     jsonschema.validate(instance=instance, schema=_schema_cache)

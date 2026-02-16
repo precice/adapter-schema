@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "preciceadapterschema"
+version = "0.1.0"
+description = "Validation utility for preCICE adapter configurations"
+readme = "README.md"
+requires-python = ">=3.7"
+license = {text = "LGPL-3.0"}
+authors = [
+    {name = "preCICE developers", email = "info@precice.org"}
+]
+keywords = ["preCICE", "adapter", "validation", "schema"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "jsonschema>=4.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/precice/adapter-schema"
+Repository = "https://github.com/precice/adapter-schema"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["preciceadapterschema*"]
+
+[tool.setuptools.package-data]
+preciceadapterschema = ["*.json"]

@@ -7,6 +7,13 @@ This package provides validation functionality for preCICE adapter configuration
 import json
 
 try:
+    from functools import cache
+except ImportError:
+    # Fallback for Python < 3.9
+    from functools import lru_cache
+    cache = lru_cache(maxsize=None)
+
+try:
     from importlib.resources import files
 except ImportError:
     # Fallback for Python < 3.9
@@ -15,8 +22,11 @@ except ImportError:
 import jsonschema
 
 
-# Cache for the loaded schema
-_schema_cache = None
+@cache
+def _load_schema():
+    """Load and cache the JSON schema."""
+    schema_text = files("preciceadapterschema").joinpath("precice_adapter_config.schema.json").read_text()
+    return json.loads(schema_text)
 
 
 def validate(instance):
@@ -30,15 +40,8 @@ def validate(instance):
         jsonschema.exceptions.ValidationError: If the instance is invalid
         jsonschema.exceptions.SchemaError: If the schema itself is invalid
     """
-    global _schema_cache
-    
-    # Load the schema only once and cache it
-    if _schema_cache is None:
-        schema_text = files("preciceadapterschema").joinpath("precice_adapter_config.schema.json").read_text()
-        _schema_cache = json.loads(schema_text)
-    
-    # Validate the instance against the cached schema
-    jsonschema.validate(instance=instance, schema=_schema_cache)
+    schema = _load_schema()
+    jsonschema.validate(instance=instance, schema=schema)
 
 
 __all__ = ['validate']

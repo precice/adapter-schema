@@ -25,8 +25,6 @@ import preciceadapterschema
 
 # Your configuration data
 config_data = {
-    "key": "value",
-    "number": 42
 }
 
 # Validate the configuration
@@ -48,7 +46,3 @@ Run tests using unittest:
 ```bash
 python -m unittest discover -s tests -v
 ```
-
-## License
-
-This project is licensed under the LGPL-3.0 License - see the LICENSE file for details.

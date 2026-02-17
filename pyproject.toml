@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "precice-adapter-schema"
-version = "v0.4"
+version = "v0.4.1"
 description = "Validation utility for preCICE adapter configurations"
 readme = "README.md"
 requires-python = ">=3.10"

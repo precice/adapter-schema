@@ -3,7 +3,7 @@ requires = ["setuptools>=45", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "preciceadapterschema"
+name = "precice-adapter-schema"
 version = "0.1.0"
 description = "Validation utility for preCICE adapter configurations"
 readme = "README.md"

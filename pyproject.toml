@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "precice-adapter-schema"
-version = "0.1.0"
+version = "v0.4"
 description = "Validation utility for preCICE adapter configurations"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -33,3 +33,6 @@ packages = ["preciceadapterschema"]
 
 [tool.setuptools.package-data]
 preciceadapterschema = ["*.json"]
+
+[tool.setuptools-git-versioning]
+enabled = true

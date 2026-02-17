@@ -1,0 +1,8 @@
+{
+  "precice_config_file_path": "../precice-config.xml",
+  "interfaces": [
+    {
+      "mesh_name": "fluid-Mesh"
+    }
+  ]
+}

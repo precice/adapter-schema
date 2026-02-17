@@ -5,11 +5,11 @@
   "metaConfigurator": {
     "aiExportFormats": {
       "OpenFOAM": {
-        "url": "https://github.com/precice/tutorials/blob/develop/perpendicular-flap/fluid-openfoam/system/preciceDict",
+        "url": "https://github.com/precice/adapter-schema/blob/main/export-formats/open-foam-example",
         "description": "Export as an OpenFOAM preCICE Adapter Configuration."
       },
       "ISSM": {
-        "url": "https://github.com/precice/preeco-orga/blob/main/adapter-config-schema/export-formats/issm-example.yaml",
+        "url": "https://github.com/precice/adapter-schema/blob/main/export-formats/issm-example.yaml",
         "description": "Export as an ISSM preCICE Adapter Configuration in YAML."
       }
     }

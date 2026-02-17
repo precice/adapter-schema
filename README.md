@@ -16,7 +16,7 @@ A schema ...
 Install the package using pip:
 
 ```bash
-pip install preciceadapterschema
+pip install precice-adapter-schema
 ```
 
 For development, install in editable mode:

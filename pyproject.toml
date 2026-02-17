@@ -1,16 +1,21 @@
 [build-system]
-requires = ["setuptools>=45", "wheel"]
+requires = ["setuptools>=45", "wheel", "setuptools-git-versioning"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "precice-adapter-schema"
-version = "v0.4.1"
+dynamic = [ "version" ]
 description = "Validation utility for preCICE adapter configurations"
 readme = "README.md"
 requires-python = ">=3.10"
 authors = [
     {name = "preCICE developers", email = "info@precice.org"}
 ]
+maintainers = [
+    { name = "Felix Neubauer", email = "felix.neubauer@ipvs.uni-stuttgart.de" }
+]
+license= "MIT"
+license-files = [ "LICENSE" ]
 keywords = ["preCICE", "adapter", "validation", "schema"]
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -25,8 +30,10 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/precice/adapter-schema"
-Repository = "https://github.com/precice/adapter-schema"
+Homepage = "https://precice.org"
+Documentation = "https://precice.org/community-guidelines-adapters"
+Repository = "https://github.com/precice/adapter-schema.git"
+"Bug Tracker" = "https://github.com/precice/adapter-schema/issues"
 
 [tool.setuptools]
 packages = ["preciceadapterschema"]

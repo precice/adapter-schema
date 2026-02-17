@@ -17,7 +17,7 @@ def _load_schema():
     return json.loads(schema_text)
 
 
-def validate(instance):
+def validate(instance: dict) -> None:
     """
     Validate instance data against the preCICE adapter configuration schema.
 

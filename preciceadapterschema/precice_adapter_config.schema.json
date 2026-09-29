@@ -152,6 +152,16 @@
             "write-interval",
             "delay"
           ]
+        },
+        {
+          "title": "Object property",
+          "description": "An optional nested object setting for a set of parameters that belong together.",
+          "type": "object"
+        },
+        {
+          "title": "Array property",
+          "description": "An optional setting for an array of inputs.",
+          "type": "array"
         }
       ]
     }
